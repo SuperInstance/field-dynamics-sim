@@ -1,62 +1,59 @@
-# Field Dynamics Simulation
+# field-dynamics-sim
 
-Multi-agent field dynamics simulation with **Conservation Spectral Analysis** — demonstrating fleet spectral health using the Conservation Spectral SDK.
+**Fleet spectral health simulation — multi-agent field dynamics with cooperative, adversarial, emergent, and phase transition scenarios.**
 
-## What It Does
+Python simulation of 20 agents (explorers, builders, guardians) in a 2D field. Uses the Conservation Spectral SDK to build tension graphs from agent interactions, compute Laplacians, and track spectral health metrics (conservation ratio, Fiedler value, spectral entropy) in real-time across four scenarios.
 
-Simulates 20 agents in a 2D field with three roles:
-- **Explorers** — seek unexplored regions, spread out
-- **Builders** — cluster together, construct near center
-- **Guardians** — patrol perimeter, protect low-energy agents
+## What This Gives You
 
-Tracks the **spectral health** of the fleet in real-time by building a tension graph from agent interactions and computing conservation ratios, spectral gap, Cheeger constant, and Fiedler vector partitions.
+- **Cooperative scenario** — all agents share goals, high conservation (CR ≈ 0.95+)
+- **Adversarial scenario** — injected rogue agents, conservation drops
+- **Emergent scenario** — no cooperation bonus, watch if conservation arises naturally
+- **Phase transition** — gradually increase rogue count, detect critical point where fleet coherence collapses
+- **Spectral fingerprinting** — effective dimension, spectral entropy, Cheeger constant
+- **Publication-quality plots** — agent positions, conservation over time, Fiedler partition, phase diagrams
 
-## Scenarios
-
-| Scenario | Description | Expected |
-|----------|-------------|----------|
-| **Cooperative** | All agents work together | High conservation, coherent structure |
-| **Adversarial** | 7 agents go rogue from start | Lower conservation, energy drain |
-| **Emergent** | No cooperation bonus | See if conservation emerges naturally |
-| **Phase Transition** | Gradually increase adversaries | Conservation drops monotonically |
-| **Key Experiment** | Inject adversaries at step 500 | Conservation drops, Fiedler separates |
-
-## Key Results
-
-- **Phase transition curve**: Conservation drops from ~899 (0% adversaries) to ~313 (35% adversaries) — a clear monotonic decline
-- **Fiedler separation**: The Fiedler vector naturally separates cooperative from adversarial agents
-- **Spectral gap**: Tracks fleet cohesion — drops as adversarial fraction increases
-- **Cheeger constant**: Measures how easily the fleet can be partitioned
-
-## Setup
+## Quick Start
 
 ```bash
-pip install numpy scipy matplotlib
-```
-
-## Run
-
-```bash
+pip install numpy scipy matplotlib scikit-learn
 python run_all.py
 ```
 
-Output plots saved to `output/`.
+Outputs go to `output/` with PNG plots and console reports for each scenario.
+
+## Scenarios
+
+| Scenario | What Happens | Expected CR |
+|----------|-------------|-------------|
+| Cooperative | All agents cooperate | ~0.95+ |
+| Adversarial | 7 rogue agents injected | ~0.3–0.5 |
+| Emergent | No cooperation bonus | Variable — tests emergence |
+| Phase Transition | Gradual rogue injection | CR drops at critical point |
 
 ## Architecture
 
 ```
-simulation.py      — Agent, MultiAgentField (core simulation engine)
-scenarios.py       — 5 experimental scenarios
-visualization.py   — All matplotlib plots
-run_all.py         — Execute everything
+simulation.py     # MultiAgentField: agents, physics, interaction graph
+scenarios.py      # 4 predefined scenarios
+visualization.py  # Publication-quality matplotlib plots
+run_all.py        # Entry point: runs all scenarios
 ```
 
-## Fleet Spectral Health
+## Testing
 
-This simulation demonstrates the core concept from the CUDA Fleet ecosystem:
+```bash
+python run_all.py  # generates output/ directory with plots
+```
 
-> The Laplacian of the fleet interaction graph captures the **conservation** of the multi-agent system. When agents cooperate, the system has high conservation (coherent structure). When adversaries disrupt, conservation drops. The Fiedler vector naturally identifies the partition between healthy and unhealthy parts of the fleet.
+## How It Fits
 
-This is spectral graph theory applied to multi-agent systems — the same mathematics underlying the Conservation Spectral SDK.
+Part of the SuperInstance ecosystem:
 
-Part of the [SuperInstance OpenConstruct](https://github.com/SuperInstance/OpenConstruct) ecosystem.
+- **[field-dynamics](https://github.com/SuperInstance/field-dynamics)** — Browser-based interactive version
+- **[conservation-spectral-python](https://github.com/SuperInstance/conservation-spectral-python)** — The Conservation Spectral SDK used here
+- **field-dynamics-sim** — Python simulation with full analysis pipeline (this repo)
+
+## License
+
+MIT
