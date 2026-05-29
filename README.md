@@ -58,3 +58,5 @@ This simulation demonstrates the core concept from the CUDA Fleet ecosystem:
 > The Laplacian of the fleet interaction graph captures the **conservation** of the multi-agent system. When agents cooperate, the system has high conservation (coherent structure). When adversaries disrupt, conservation drops. The Fiedler vector naturally identifies the partition between healthy and unhealthy parts of the fleet.
 
 This is spectral graph theory applied to multi-agent systems — the same mathematics underlying the Conservation Spectral SDK.
+
+Part of the [SuperInstance OpenConstruct](https://github.com/SuperInstance/OpenConstruct) ecosystem.
